@@ -8,7 +8,7 @@ const REPOSITORY_LIST = gql`
         privacy: PUBLIC
         isFork: false
         isLocked: false
-        first: 10
+        first: 100
         orderBy: { field: STARGAZERS, direction: DESC }
       ) {
         edges {
