@@ -20,30 +20,15 @@ const S = {
     align-items: center;
     display: flex;
   `,
-  Input: styled.input`
-    font-size: 14px;
-    color: #000000;
-    background-color: #e5e5e5;
-    padding: 12px 18px;
-    border-radius: 2px;
-    border: none;
-    min-width: 200px;
-
-    &::placeholder {
-      color: #7e7e7e;
-    }
-  `,
 };
 
-const Navbar = () => {
-  return (
-    <S.NavbarContainer>
-      <S.NavbarContent>
-        <S.Title>GitHub Repositories</S.Title>
-        <S.Input placeholder="Quick search..." />
-      </S.NavbarContent>
-    </S.NavbarContainer>
-  );
-};
+const Navbar = () => (
+  <S.NavbarContainer>
+    <S.NavbarContent>
+      <S.Title>GitHub Repositories</S.Title>
+      <S.Title>Source Code</S.Title>
+    </S.NavbarContent>
+  </S.NavbarContainer>
+);
 
 export default Navbar;

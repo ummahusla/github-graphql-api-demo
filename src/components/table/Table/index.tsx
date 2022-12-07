@@ -32,19 +32,17 @@ export const TableData = styled.td`
   padding: 8px;
 `;
 
-const Table = ({ headers, children }: TableProps) => {
-  return (
-    <StyledTable>
-      <TableHeader>
-        <TableRow>
-          {headers.map((header: string, i: number) => (
-            <TableHeaderCell key={`${header}-${i}`}>{header}</TableHeaderCell>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>{children}</TableBody>
-    </StyledTable>
-  );
-};
+const Table = ({ headers, children }: TableProps) => (
+  <StyledTable>
+    <TableHeader>
+      <TableRow>
+        {headers.map((header: string, i: number) => (
+          <TableHeaderCell key={`${header}-${i}`}>{header}</TableHeaderCell>
+        ))}
+      </TableRow>
+    </TableHeader>
+    <TableBody>{children}</TableBody>
+  </StyledTable>
+);
 
 export default Table;
