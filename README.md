@@ -26,12 +26,21 @@ read:gpg_key
 REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=
 ```
 
+3. Run `yarn start` and open http://localhost:3000.
+
 ---
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-- `npm start` # http://localhost:3000
+- `npm start`
 - `npm test`
 - `yarn build`
+
+---
+
+## Future improvements and conciderations
+
+- Pagination features can be converted to `usePagination` hooks.
+- `src/views/main/Repos/index.tsx` can be refactored into smaller chunks, especially taking out the logic behind search and filtering into separate functions.
