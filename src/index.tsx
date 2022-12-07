@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 import './index.css';
 import App from './App';
@@ -10,8 +16,23 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const GITHUB_BASE_URL = 'https://api.github.com/graphql';
+
+const httpLink = createHttpLink({
+  uri: GITHUB_BASE_URL,
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: `Bearer ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+    },
+  };
+});
+
 const client = new ApolloClient({
-  uri: 'https://api.spacex.land/graphql/',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

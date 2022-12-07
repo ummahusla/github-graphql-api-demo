@@ -1,16 +1,38 @@
 import { useQuery, gql } from '@apollo/client';
 
-const FILMS_QUERY = gql`
+const GET_PERSONAL_REPOSITORIES = gql`
   {
-    launchesPast(limit: 10) {
-      id
-      mission_name
+    viewer {
+      repositories(
+        ownerAffiliations: [OWNER]
+        privacy: PUBLIC
+        isFork: false
+        isLocked: false
+        first: 10
+        orderBy: { field: STARGAZERS, direction: DESC }
+      ) {
+        edges {
+          node {
+            id
+            name
+            url
+            owner {
+              login
+            }
+            description
+            stargazers {
+              totalCount
+            }
+            forkCount
+          }
+        }
+      }
     }
   }
 `;
 
 export default function App() {
-  const { data, loading, error } = useQuery(FILMS_QUERY);
+  const { data, loading, error } = useQuery(GET_PERSONAL_REPOSITORIES);
 
   if (loading) return <div>'Loading...'</div>;
   if (error)
@@ -20,12 +42,38 @@ export default function App() {
       </div>
     );
 
+  const mappedRepositories = data.viewer.repositories.edges.map(
+    (repository: any) => {
+      const { id, name, url, owner, description, stargazers, forkCount } =
+        repository.node;
+
+      return {
+        id,
+        name,
+        url,
+        owner,
+        description,
+        stargazers,
+        forkCount,
+      };
+    }
+  );
+
+  console.log(mappedRepositories);
+
   return (
     <div>
-      <h1>SpaceX Launches</h1>
+      <h1>List of my GitHub's repositories</h1>
       <ul>
-        {data.launchesPast.map((launch: any) => (
-          <li key={launch.id}>{launch.mission_name}</li>
+        {mappedRepositories.map((repository: any) => (
+          <li key={repository.id}>
+            <a href={repository.url} target="_blank" rel="noreferrer">
+              {repository.name}
+            </a>
+            <p>{repository.description}</p>
+            <p>Stars: {repository.stargazers.totalCount}</p>
+            <p>Forks: {repository.forkCount}</p>
+          </li>
         ))}
       </ul>
     </div>
