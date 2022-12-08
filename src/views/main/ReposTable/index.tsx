@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import ExternalIcon from '../../../assets/icons/ExternalIcon';
 import Table, { TableRow, TableData } from '../../../components/table/Table';
-import { Repository } from '../Repos';
+import { Repository } from '../../../hooks/useRepositories';
 
 interface Props {
   headers: string[];

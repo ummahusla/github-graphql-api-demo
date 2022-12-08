@@ -6,7 +6,7 @@ Playing around with GitHub's GraphQL API for the demo purposes and the opportuni
 
 ## Local development setup
 
-1. # [Create a new personal token](https://github.com/settings/tokens) with the following scope:
+1. [Create a new personal token](https://github.com/settings/tokens) with the following scope:
 
 ```
 repo
@@ -42,5 +42,6 @@ In the project directory, you can run:
 
 ## Future improvements and conciderations
 
-- Pagination features can be converted to `usePagination` hooks.
-- `src/views/main/Repos/index.tsx` can be refactored into smaller chunks, especially taking out the logic behind search and filtering into separate functions.
+-
+-
+-
