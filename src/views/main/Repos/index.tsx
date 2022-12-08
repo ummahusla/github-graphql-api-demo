@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Table from '../../../components/table/Table';
 import useRepositoryList from '../../../hooks/useRepositoryList';
@@ -37,13 +37,6 @@ export interface Repository {
 const Repos = () => {
   const { loading, error, data } = useRepositoryList();
 
-  const [searchInput, setSearchInput] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const recordsPerPage = 10;
-  const indexOfLastRecord = currentPage * recordsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-
   // Map the raw data to a more readable format
   const mappedRepos = useMemo(() => {
     if (!data) return [];
@@ -63,9 +56,13 @@ const Repos = () => {
     });
   }, [data]);
 
-  const numberOfPages = Math.ceil(mappedRepos.length / recordsPerPage);
+  const recordsPerPage = 10;
+  const [searchInput, setSearchInput] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const [recordsNumber, setRecordsNumber] = useState(mappedRepos.length);
 
-  // Get the current's page repositories to display
   const currentRepos = useMemo(
     () => mappedRepos.slice(indexOfFirstRecord, indexOfLastRecord),
     [indexOfFirstRecord, indexOfLastRecord, mappedRepos]
@@ -76,11 +73,37 @@ const Repos = () => {
     if (!searchInput) return currentRepos;
 
     return currentRepos.filter((repo: Repository) => {
-      return repo.name.toLowerCase().includes(searchInput.toLowerCase());
+      // If the repository doesn't have a description, filter by name only
+      if (!repo.description)
+        return repo.name.toLowerCase().includes(searchInput.toLowerCase());
+
+      // If the repository has a description, filter by name and description
+      return (
+        repo.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+        repo.description.toLowerCase().includes(searchInput.toLowerCase())
+      );
     });
   }, [searchInput, currentRepos]);
 
+  // Calculate the total number of pages to display in pagination component
+  const numberOfPages = useMemo(() => {
+    return Math.ceil(
+      searchInput !== ''
+        ? filteredRepos.length / recordsPerPage
+        : mappedRepos.length / recordsPerPage
+    );
+  }, [filteredRepos.length, mappedRepos.length, recordsPerPage, searchInput]);
+
   const tableHeaders = ['Name', 'Description', 'Stars', 'Forks'];
+
+  useEffect(() => {
+    // Calculate the total number of results to display in pagination component
+    if (searchInput !== '') {
+      setRecordsNumber(filteredRepos.length);
+    } else {
+      setRecordsNumber(mappedRepos.length);
+    }
+  }, [filteredRepos.length, mappedRepos.length, searchInput]);
 
   return (
     <>
@@ -100,12 +123,14 @@ const Repos = () => {
         <>
           <ReposTable headers={tableHeaders} repos={filteredRepos} />
 
-          <ReposTablePagination
-            currentPage={currentPage}
-            numberOfPages={numberOfPages}
-            setCurrentPage={setCurrentPage}
-            recordsNumber={mappedRepos.length}
-          />
+          {filteredRepos.length !== 0 && (
+            <ReposTablePagination
+              currentPage={currentPage}
+              numberOfPages={numberOfPages}
+              setCurrentPage={setCurrentPage}
+              recordsNumber={recordsNumber}
+            />
+          )}
         </>
       )}
     </>
