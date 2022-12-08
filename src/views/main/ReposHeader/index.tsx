@@ -16,7 +16,6 @@ const S = {
     color: #000000;
     background-color: #e5e5e5;
     padding: 12px 18px;
-    border-radius: 2px;
     border: none;
     min-width: 200px;
 
@@ -37,7 +36,8 @@ const ReposHeader = ({ searchHandler }: Props) => {
         <S.Title>Hello friend 👋</S.Title>
         <S.Subtitle>
           Below is a list of the public repositories I have worked on over the
-          past years.
+          years. Source code found there can give you nightmares, so look at
+          your own risk.
         </S.Subtitle>
       </div>
 

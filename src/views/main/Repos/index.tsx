@@ -104,6 +104,7 @@ const Repos = () => {
             currentPage={currentPage}
             numberOfPages={numberOfPages}
             setCurrentPage={setCurrentPage}
+            recordsNumber={mappedRepos.length}
           />
         </>
       )}
