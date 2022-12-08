@@ -1,32 +1,14 @@
 import Table from '../../../components/table/Table';
-import useReposPagination from '../../../hooks/useReposPagination';
 import { useRepositories } from '../../../hooks/useRepositories';
+import { REPO_TABLE_HEADERS } from '../../../utils/constants';
 import ReposHeader from '../ReposHeader';
 import ReposTable from '../ReposTable';
 import ReposTablePagination from '../ReposTablePagination';
 import ReposTableSkeleton from '../ReposTableSkeleton';
-import useFilteredRepos from '../../../hooks/useFilteredRepos';
 
 const Repos = () => {
-  const [repos, { loading, error }] = useRepositories();
-  const [
-    currentRepos,
-    {
-      recordsPerPage,
-      setRecordsNumber,
-      currentPage,
-      setCurrentPage,
-      recordsNumber,
-    },
-  ] = useReposPagination(repos);
-  const [filteredRepos, { setSearchInput, numberOfPages }] = useFilteredRepos(
-    repos,
-    currentRepos,
-    recordsPerPage,
-    setRecordsNumber
-  );
-
-  const tableHeaders = ['Name', 'Description', 'Stars', 'Forks'];
+  const [repos, { error, loading }, setSearchInput, pagination] =
+    useRepositories();
 
   return (
     <>
@@ -39,21 +21,14 @@ const Repos = () => {
       )}
 
       {loading ? (
-        <Table headers={tableHeaders}>
+        <Table headers={REPO_TABLE_HEADERS}>
           <ReposTableSkeleton />
         </Table>
       ) : (
         <>
-          <ReposTable headers={tableHeaders} repos={filteredRepos} />
+          <ReposTable headers={REPO_TABLE_HEADERS} repos={repos} />
 
-          {filteredRepos.length !== 0 && (
-            <ReposTablePagination
-              currentPage={currentPage}
-              numberOfPages={numberOfPages}
-              setCurrentPage={setCurrentPage}
-              recordsNumber={recordsNumber}
-            />
-          )}
+          {repos.length !== 0 && <ReposTablePagination {...pagination} />}
         </>
       )}
     </>
