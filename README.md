@@ -26,7 +26,7 @@ read:enterprise
 read:gpg_key
 ```
 
-2. Create `.env.local` file as on the example below. We will use custom environment variable which is availabe as a part of [`create-react-app`](https://create-react-app.dev/docs/adding-custom-environment-variables/).
+2. Edit `.env.local` file as on the example below. We will use custom environment variable which is availabe as a part of [`create-react-app`](https://create-react-app.dev/docs/adding-custom-environment-variables/).
 
 ```bash
 REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=
@@ -68,3 +68,4 @@ In the project directory, you can run:
 - Restructure the `src/assets/icon` folder by introducing either the package with an icon set or creating an `Icon` wrapper component.
 - Reconsider integration test implementation and replace `MockProvider` with actual `ApolloProvider` as this approach doesn't fit well with the `react-testing-library` principles. It also doesn't make for a streamlined testing experience (https://www.arahansen.com/testing-apollo-components-using-react-testing-library/).
 - Finish dockerizing the production application, as only the local development version currently works. (https://rsbh.dev/blogs/dockerize-react-app).
+- Implemenet husky with pre-commit hook to run linting and prettier checks.
