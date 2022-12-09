@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client';
 
-const REPOSITORY_LIST = gql`
+export const REPOSITORY_LIST = gql`
   {
     viewer {
       repositories(

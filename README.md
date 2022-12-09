@@ -1,5 +1,11 @@
 # GitHub GrahpQL API demo
 
+## Deployed version
+
+- https://github-graphql-api-demo.netlify.app
+
+---
+
 Playing around with GitHub's GraphQL API for the demo purposes and the opportunity to have more practice with GraphQL and Apollo in general.
 
 ---
@@ -34,14 +40,16 @@ REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN=
 
 In the project directory, you can run:
 
-- `npm start`
-- `npm test`
+- `yarn start`
+- `yarn test`
 - `yarn build`
 
 ---
 
 ## Future improvements and conciderations
 
--
--
--
+- Automate Apollo types generation through GraphQL Code Generator.
+- CSS variables introduction for storing global like colours, etc.
+- Implement server-side filtering and pagination to replace the current client-side approach, which has several limitations on performance and functionality.
+- Restructure the `src/assets/icon` folder by introducing either the package with an icon set or creating an `Icon` wrapper component.
+- Reconsider integration test implementation and replace `MockProvider` with actual `ApolloProvider` as this approach doesn't fit well with the `react-testing-library` principles. It also doesn't make for a streamlined testing experience (https://www.arahansen.com/testing-apollo-components-using-react-testing-library/).

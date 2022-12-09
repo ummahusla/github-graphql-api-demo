@@ -7,8 +7,12 @@ import ReposTablePagination from '../ReposTablePagination';
 import ReposTableSkeleton from '../ReposTableSkeleton';
 
 const Repos = () => {
-  const [repos, { error, loading }, setSearchInput, pagination] =
-    useRepositories();
+  const [
+    repos,
+    { error, loading },
+    setSearchInput,
+    pagination,
+  ] = useRepositories();
 
   return (
     <>
